@@ -10,3 +10,10 @@ type Wrap struct {
 	Created_at time.Time `json:"create_at"`
 	Updated_at time.Time `json:"update_at"`
 }
+
+const (
+	StatusPending    = "pending"    // Just created
+	StatusProcessing = "processing" // Images uploaded, generating
+	StatusCompleted  = "completed"  // Video/collage ready
+	StatusFailed     = "failed"
+)
