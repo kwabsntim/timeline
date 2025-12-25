@@ -8,12 +8,12 @@ type Service struct {
 	repo wrapinterface
 }
 
-func NewService(repo wrapinterface) *Service {
+func NewService(repo wrapinterface) ServiceInterface {
 	return &Service{
 		repo: repo,
 	}
 }
-func (s *Service) MakeWrap(name, status string) (*Wrap, error) {
+func (s *Service) MakeWrap(name string) (*Wrap, error) {
 	wrap := &Wrap{
 		Name:       name,
 		Status:     StatusPending,
