@@ -1,7 +1,12 @@
 package wrap
 
+import "time"
+
 type Wrap struct {
-	ID     int64  `json:"id"`
-	Name   string `json:"name"`
-	Status string `json:"status"`
+	ID         int64     `json:"id"`
+	UUID       string    `json:"uuid"`
+	Name       string    `json:"name"`
+	Status     string    `json:"status"`
+	Created_at time.Time `json:"create_at"`
+	Updated_at time.Time `json:"update_at"`
 }
