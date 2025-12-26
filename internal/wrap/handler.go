@@ -3,6 +3,7 @@ package wrap
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 	"strings"
 )
@@ -40,7 +41,8 @@ func (h *Handler) CreateWrap(w http.ResponseWriter, r *http.Request) {
 
 	wrap, err := h.service.MakeWrap(req.Name)
 	if err != nil {
-		http.Error(w, "Failed to create wrap", http.StatusInternalServerError)
+		log.Printf("Error creating wrap: %v", err)
+		http.Error(w, "Failed to create wrap: "+err.Error(), http.StatusInternalServerError)
 		return
 	}
 
@@ -56,7 +58,7 @@ func (h *Handler) GetWrap(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Extract UUID from URL path
-	path := strings.TrimPrefix(r.URL.Path, "/api/wraps/")
+	path := strings.TrimPrefix(r.URL.Path, "/api/get/wrap/")
 	if path == "" {
 		http.Error(w, "UUID is required", http.StatusBadRequest)
 		return

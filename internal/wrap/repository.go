@@ -20,7 +20,7 @@ func (r *Repository) CreateWrap(wrap *Wrap) error {
 		wrap.UUID = uuid.New().String()
 	}
 
-	query := `INSERT INTO wrap(uuid,name,status,created_at,updated_at) VALUES(?,?)`
+	query := `INSERT INTO wrap(uuid,name,status,created_at,updated_at) VALUES(?,?,?,?,?)`
 	_, err := r.db.Exec(query, wrap.UUID, wrap.Name, wrap.Status, wrap.Created_at, wrap.Updated_at)
 	if err != nil {
 		return err

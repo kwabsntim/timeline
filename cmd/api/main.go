@@ -33,7 +33,7 @@ func main() {
 
 	// 6. Setup routes
 	http.HandleFunc("/api/create/wrap", wrapHandler.CreateWrap)
-	http.HandleFunc("/api/get/wrap", wrapHandler.GetWrap)
+	http.HandleFunc("/api/get/wrap/", wrapHandler.GetWrap)
 
 	// 7. Start server
 	log.Println("🚀 Server starting on :8080")
