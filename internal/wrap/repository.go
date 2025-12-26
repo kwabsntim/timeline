@@ -46,3 +46,20 @@ func (r *Repository) Getwrap(uuid string) (*Wrap, error) {
 	}
 	return &wrap, nil
 }
+func (r *Repository) DeleteWrap(uuid string) error {
+	// First check if wrap exists
+	var exists bool
+	checkQuery := `SELECT EXISTS(SELECT 1 FROM wrap WHERE uuid=?)`
+	err := r.db.QueryRow(checkQuery, uuid).Scan(&exists)
+	if err != nil {
+		return err
+	}
+	if !exists {
+		return sql.ErrNoRows
+	}
+
+	// Delete the wrap
+	query := `DELETE FROM wrap WHERE uuid=?`
+	_, err = r.db.Exec(query, uuid)
+	return err
+}

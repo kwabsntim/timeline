@@ -12,6 +12,12 @@ func InitDB() (*sql.DB, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	// Enable foreign keys
+	_, err = db.Exec("PRAGMA foreign_keys = ON")
+	if err != nil {
+		return nil, err
+	}
 	log.Println("database connected successfully")
 	return db, nil
 }
