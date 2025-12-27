@@ -32,7 +32,10 @@ WORKDIR /root/
 COPY --from=builder /app/main .
 
 # Create directories for database and media
-RUN mkdir -p media/images media/audio media/videos
+RUN mkdir -p data media/images media/audio media/videos
+
+# Set proper permissions
+RUN chmod 755 data media
 
 # Expose port
 EXPOSE 8080

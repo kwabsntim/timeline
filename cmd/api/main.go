@@ -9,6 +9,9 @@ import (
 )
 
 func main() {
+	// 0. Log startup info
+	log.Println("🚀 Starting Timeline API...")
+
 	// 1. Initialize database
 	database, err := db.InitDB()
 	if err != nil {
