@@ -25,7 +25,7 @@ func (r *Repository) CreateWrap(wrap *Wrap) error {
 	if err != nil {
 		return err
 	}
-	return err
+	return nil
 
 }
 func (r *Repository) Getwrap(uuid string) (*Wrap, error) {

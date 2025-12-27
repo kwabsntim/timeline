@@ -80,3 +80,22 @@ func (r *Repository) DeleteMedia(mediaUUID string) error {
 	_, err = r.db.Exec(query, mediaUUID)
 	return err
 }
+
+// delete media by wrap
+func (r *Repository) DeleteMediaByWrap(wrapUUID string) error {
+	// Check if media exists
+	var exists bool
+	checkQuery := `SELECT EXISTS(SELECT 1 FROM media WHERE wrap_uuid=?)`
+	err := r.db.QueryRow(checkQuery, wrapUUID).Scan(&exists)
+	if err != nil {
+		return err
+	}
+	if !exists {
+		return errors.New("media not found")
+	}
+
+	// Delete the media
+	query := `DELETE FROM media WHERE wrap_uuid=?`
+	_, err = r.db.Exec(query, wrapUUID)
+	return err
+}

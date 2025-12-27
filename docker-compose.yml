@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  timeline-api:
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./media:/root/media
+      - ./timeline.db:/root/timeline.db
+    environment:
+      - PORT=8080
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
