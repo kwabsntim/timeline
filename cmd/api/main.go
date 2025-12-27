@@ -36,6 +36,14 @@ func main() {
 	wrapHandler := wrap.NewHandler(wrapService)
 
 	// 6. Setup routes
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte("Timeline API is running!"))
+	})
+	http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte("OK"))
+	})
 	http.HandleFunc("/api/create/wrap", wrapHandler.CreateWrap)
 	http.HandleFunc("/api/get/wrap/", wrapHandler.GetWrap)
 
