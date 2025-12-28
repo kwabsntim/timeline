@@ -19,6 +19,7 @@ func NewRepository(db *sql.DB) *Repository {
 
 // creation of media
 func (r *Repository) CreateMedia(media *Media) error {
+
 	if media.UUID == "" {
 		media.UUID = uuid.NewString()
 	}
@@ -27,10 +28,9 @@ func (r *Repository) CreateMedia(media *Media) error {
 	if err != nil {
 		return err
 	}
-	return err
+	return nil
 }
 
-// get the media and its files
 // get the media and its files
 func (r *Repository) GetMediaByWrap(wrapUUID string) ([]*Media, error) {
 	query := `SELECT uuid,wrap_uuid,filename,file_path,file_size,mime_type,uploaded_at,photo_taken_at FROM media WHERE wrap_uuid=? ORDER BY photo_taken_at ASC`

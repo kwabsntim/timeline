@@ -4,7 +4,7 @@ A REST API for managing timeline wraps and media files built with Go and SQLite.
 
 ## Overview
 
-Timeline API is a backend service that allows users to create and manage timeline wraps containing media files. Each wrap can contain up to 9 media files (images, videos, audio) and provides a simple way to organize and retrieve timeline content.
+Timeline API is a backend service that allows users to create and manage timeline wraps containing media files. Each wrap can contain up to 12 media files representing photos taken throughout each month of the year, providing a yearly timeline of memories.
 
 ## Current State
 
@@ -24,7 +24,7 @@ The project is currently in active development with the following implemented fe
 - File metadata storage (filename, file path, file size, MIME type)
 - Upload timestamp and photo taken timestamp tracking
 - Automatic UUID generation for media files
-- 9 file limit per wrap enforcement
+- 12 file limit per wrap enforcement (one for each month of the year)
 - Cascade deletion when parent wrap is deleted
 
 **Database:**
