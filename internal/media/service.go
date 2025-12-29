@@ -9,8 +9,14 @@ func NewService(repo *Repository) *MediaService {
 		repo: repo,
 	}
 }
+//file size for the images
+const(
+	MaxImageSize=8*1024*1024
+)
+//file types for the images 
 
 func (s *MediaService) CreateMedia(media *Media) error {
+
 	return s.repo.CreateMedia(media)
 }
 

@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 	"timeline/internal/db"
+	"timeline/internal/middleware"
 	"timeline/internal/wrap"
 )
 
@@ -44,8 +45,8 @@ func main() {
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte("OK"))
 	})
-	http.HandleFunc("/api/create/wrap", wrapHandler.CreateWrap)
-	http.HandleFunc("/api/get/wrap/", wrapHandler.GetWrap)
+	http.HandleFunc("/api/wraps", wrapHandler.CreateWrap)
+	http.HandleFunc("/api/wraps/{id}", wrapHandler.GetWrap)
 
 	// 7. Get port from environment
 	port := os.Getenv("PORT")
@@ -55,5 +56,5 @@ func main() {
 
 	// 8. Start server
 	log.Println("🚀 Server starting on port", port)
-	log.Fatal(http.ListenAndServe(":"+port, nil))
+	log.Fatal(http.ListenAndServe(":"+port, middleware.CORS(http.DefaultServeMux)))
 }
