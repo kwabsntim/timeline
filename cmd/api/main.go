@@ -17,6 +17,7 @@ func main() {
 	database, err := db.InitDB()
 	if err != nil {
 		log.Fatal("Failed to connect to database:", err)
+		return
 	}
 	defer database.Close()
 
@@ -24,7 +25,9 @@ func main() {
 	err = db.CreateTables(database)
 	if err != nil {
 		log.Fatal("Failed to create tables:", err)
+		return
 	}
+	defer database.Close()
 	log.Println("✅ Database initialized successfully")
 
 	// 3. Initialize repository
@@ -46,7 +49,6 @@ func main() {
 		w.Write([]byte("OK"))
 	})
 	http.HandleFunc("/api/wraps", wrapHandler.CreateWrap)
-	http.HandleFunc("/api/wraps/all", wrapHandler.GetAllWraps) // New route for getting all wraps
 	http.HandleFunc("/api/wraps/{id}", wrapHandler.GetWrap)
 
 	// 7. Get port from environment
