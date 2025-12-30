@@ -45,9 +45,12 @@ func (h *Handler) CreateWrap(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Failed to create wrap: "+err.Error(), http.StatusInternalServerError)
 		return
 	}
-
+	response := map[string]interface{}{
+		"message": "Wrap deleted successfully",
+		"data":    wrap,
+	}
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(wrap)
+	json.NewEncoder(w).Encode(response)
 }
 
 // GET /api/wraps/all
@@ -63,9 +66,13 @@ func (h *Handler) GetAllWraps(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Failed to retrieve wraps", http.StatusInternalServerError)
 		return
 	}
+	response := map[string]interface{}{
+		"message": "Wrap deleted successfully",
+		"data":    wraps,
+	}
 
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(wraps)
+	json.NewEncoder(w).Encode(response)
 }
 
 // GET /api/wraps/{uuid}
@@ -76,7 +83,7 @@ func (h *Handler) GetWrap(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Extract UUID from URL path
-	path := strings.TrimPrefix(r.URL.Path, "/api/get/wrap/")
+	path := strings.TrimPrefix(r.URL.Path, "/api/wraps/")
 	if path == "" {
 		http.Error(w, "UUID is required", http.StatusBadRequest)
 		return
@@ -92,7 +99,35 @@ func (h *Handler) GetWrap(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Wrap not found", http.StatusNotFound)
 		return
 	}
+	response := map[string]interface{}{
+		"message": "Wrap deleted successfully",
+		"data":    wrap,
+	}
 
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(wrap)
+	json.NewEncoder(w).Encode(response)
+}
+func (h *Handler) DeleteWrap(w http.ResponseWriter, r *http.Request) {
+	// Implement the logic to delete a wrap
+	if r.Method != http.MethodDelete {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+	path := strings.TrimPrefix(r.URL.Path, "/api/wraps/delete/")
+	if path == "" {
+		http.Error(w, "UUID is required", http.StatusBadRequest)
+		return
+	}
+
+	err := h.service.DeleteWrap(path)
+	if err != nil {
+		http.Error(w, "Failed to delete wrap", http.StatusInternalServerError)
+		return
+	}
+	response := map[string]interface{}{
+		"message": "Wrap deleted successfully",
+	}
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(response)
+
 }

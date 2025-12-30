@@ -42,3 +42,10 @@ func (s *Service) GetAllWraps() ([]*Wrap, error) {
 	}
 	return wraps, nil
 }
+func (s *Service) DeleteWrap(uuid string) error {
+	err := s.repo.DeleteWrap(uuid)
+	if err != nil {
+		return err
+	}
+	return nil
+}
