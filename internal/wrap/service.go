@@ -34,3 +34,11 @@ func (s *Service) GetWrap(uuid string) (*Wrap, error) {
 	}
 	return wrap, nil
 }
+
+func (s *Service) GetAllWraps() ([]*Wrap, error) {
+	wraps, err := s.repo.GetAllWraps()
+	if err != nil {
+		return nil, err
+	}
+	return wraps, nil
+}

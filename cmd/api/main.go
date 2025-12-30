@@ -46,6 +46,7 @@ func main() {
 		w.Write([]byte("OK"))
 	})
 	http.HandleFunc("/api/wraps", wrapHandler.CreateWrap)
+	http.HandleFunc("/api/wraps/all", wrapHandler.GetAllWraps) // New route for getting all wraps
 	http.HandleFunc("/api/wraps/{id}", wrapHandler.GetWrap)
 
 	// 7. Get port from environment

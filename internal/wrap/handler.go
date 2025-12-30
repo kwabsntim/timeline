@@ -50,6 +50,24 @@ func (h *Handler) CreateWrap(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(wrap)
 }
 
+// GET /api/wraps/all
+func (h *Handler) GetAllWraps(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	wraps, err := h.service.GetAllWraps()
+	if err != nil {
+		log.Printf("Error getting all wraps: %v", err)
+		http.Error(w, "Failed to retrieve wraps", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(wraps)
+}
+
 // GET /api/wraps/{uuid}
 func (h *Handler) GetWrap(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {

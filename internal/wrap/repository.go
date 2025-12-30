@@ -63,3 +63,34 @@ func (r *Repository) DeleteWrap(uuid string) error {
 	_, err = r.db.Exec(query, uuid)
 	return err
 }
+
+func (r *Repository) GetAllWraps() ([]*Wrap, error) {
+	query := `SELECT uuid, name, status, created_at, updated_at FROM wrap`
+	rows, err := r.db.Query(query)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var wraps []*Wrap
+	for rows.Next() {
+		var wrap Wrap
+		err := rows.Scan(
+			&wrap.UUID,
+			&wrap.Name,
+			&wrap.Status,
+			&wrap.Created_at,
+			&wrap.Updated_at,
+		)
+		if err != nil {
+			return nil, err
+		}
+		wraps = append(wraps, &wrap)
+	}
+
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return wraps, nil
+}
