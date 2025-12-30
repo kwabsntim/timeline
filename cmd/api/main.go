@@ -51,6 +51,7 @@ func main() {
 	http.HandleFunc("/api/wraps", wrapHandler.CreateWrap)
 	http.HandleFunc("/api/wraps/{id}", wrapHandler.GetWrap)
 	http.HandleFunc("/api/wraps/all", wrapHandler.GetAllWraps)
+	http.HandleFunc("/api/wraps/delete/{id}", wrapHandler.DeleteWrap)
 	// 7. Get port from environment
 	port := os.Getenv("PORT")
 	if port == "" {
